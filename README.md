@@ -124,4 +124,30 @@ LOS RDDs POSEEN 3 CARACTERÍSTICAS BASE:
 * SON INMUTABLES
 * SON PEREZOSOS (hasta q no ejecutemos una acción el código no corre realmente)
 
+# Funciones Pyspark
+
+1. `F.regexp_replace()`
+
+Esta función nos permite buscar un patrón en los datos de cada registro de una columna concreta y replazarlos por otro valor.
+
+Por ejemplo los valores d emi columna empiezan por 0 y quiero eliminarlos y posteriormente hacer un cast a un número pues usando una expresión regular puedo hacerlo
+
+```python
+
+import pyspark.sql.functions as F
+from pyspark.sql.types import LongType
+
+df_cata_cntrts_0_100_DATIO_formated    = df_cata_cntrts_0_100_DATIO_formated.withColumn("nombre_columna",F.regexp_replace('nombre_columna', r'^[0]*', '').cast(LongType()))
+
+```
+Si quisiera eliminar todos los 0 incluso los que están intercalados haría:
+
+```python
+
+import pyspark.sql.functions as F
+from pyspark.sql.types import LongType
+
+df_cata_cntrts_0_100_DATIO_formated    = df_cata_cntrts_0_100_DATIO_formated.withColumn("nombre_columna",F.regexp_replace('nombre_columna', r'0', '').cast(LongType()))
+
+```
 
